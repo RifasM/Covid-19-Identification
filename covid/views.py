@@ -19,6 +19,8 @@ def home(request):
 
     form = InputForm()
 
+    result = TestStatus.objects.all()
+
     return render(request, "index.html", {
         "form": form,
         "status": result,
@@ -53,7 +55,27 @@ def make_prediction(request):
                 status = "Positive"
 
             TestStatus.objects.filter(id=form_file.id).update(status=status)
-            
+
+            result = TestStatus.objects.all()
+
+            """model = Model(inputs=model_file.inputs, outputs=outputs)
+
+            img = img_to_array(image_input)
+            img = expand_dims(img, axis=0)
+            img = preprocess_input(img)
+            feature_maps = model.predict(img)
+
+            square = 1
+            for fmap in feature_maps:
+                ix = 1
+                for _ in range(square):
+                    ax = pyplot.subplot(square, square, ix)
+                    ax.set_xticks([])
+                    ax.set_yticks([])
+                    pyplot.imshow(fmap[0, :, :, ix - 1], cmap='gray')
+                    ix += 1
+                pyplot.show()"""
+
             result = TestStatus.objects.all()
 
             return render(request, "result.html", {
